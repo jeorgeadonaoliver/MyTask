@@ -1,6 +1,0 @@
-@MyTask.Api.Client_HostAddress = http://localhost:5214
-
-GET {{MyTask.Api.Client_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
