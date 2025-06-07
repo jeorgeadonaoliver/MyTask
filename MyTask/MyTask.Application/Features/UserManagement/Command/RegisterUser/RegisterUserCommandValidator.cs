@@ -1,0 +1,35 @@
+﻿using FluentValidation;
+using MyTask.Application.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyTask.Application.Features.UserManagement.Command.RegisterUser
+{
+    public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+    {
+        private readonly IUserRepository _repository;
+        public RegisterUserCommandValidator(IUserRepository repository)
+        {
+            _repository = repository;
+
+            RuleFor(x => x)
+                .NotNull()
+                .WithMessage("RegisterUSerCommand must not be null!");
+
+            RuleFor(x => x.Email)
+                .NotNull()
+                .WithMessage("Email is Required!")
+                .MustAsync(IsEmailExist)
+                .WithMessage("Email already Exist. Please proceed to login!");
+        }
+
+        private async Task<bool> IsEmailExist(string email, CancellationToken cancellationToken) { 
+        
+            return !await _repository.AnyUserByEmailAsync(email);
+        }
+
+    }
+}
