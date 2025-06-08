@@ -1,5 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import { QueryProvider } from './query-provider';
+import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
