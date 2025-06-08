@@ -13,7 +13,7 @@ namespace MyTask.Application.Contracts
 
         public Task<string> GetUserPasswordlByEmailAsync(string email);
 
-        public Task<string> GetUserRoleByEmailAsync(string email);
+        public Task<User> GetUserByEmailAsync(string email);
 
     }
 }

@@ -21,12 +21,12 @@ namespace MyTask.Security
             return await _context.Set<User>().AsNoTracking().AnyAsync(x => x.Email == email);
         }
 
-        public async Task<string> GetUserRoleByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
             var user = await _context.Set<User>().Include(u => u.UserRoles).AsNoTracking().FirstOrDefaultAsync(x => x.Email == email) ??
                throw new Exception("User email does not exist");
 
-            return user.UserRoles.Name;
+            return user;
         }
     }
 }
