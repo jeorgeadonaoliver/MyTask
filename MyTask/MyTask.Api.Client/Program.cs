@@ -1,4 +1,5 @@
 using MyTask.Api.Client.Extensions;
+using MyTask.Api.Client.Middleware;
 using MyTask.Application;
 using MyTask.Persistence;
 using MyTask.Security;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSecurityService();
+builder.Services.AddCorsService();
 
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddJwtAuthentication(builder.Configuration);
@@ -33,7 +35,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseHttpsRedirection();
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();

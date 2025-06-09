@@ -21,9 +21,13 @@ const useLogin = () => {
     
     return useMutation({
         mutationFn: async (data : AuthenticateUserCommand) =>{
+            console.log("Executing login with data:", data);
             return await authCommandHandler.execute(data);
         },
         onSuccess: (response: AuthResponseModel) => {
+
+            console.log("Login successful, response:", response);
+            
             queryClient.setQueryData(["token"], response.token);
             queryClient.setQueryData(["fullname"], response.fullName);
             queryClient.setQueryData(["role"], response.role);

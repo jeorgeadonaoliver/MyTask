@@ -12,7 +12,8 @@ namespace MyTask.Security
 
         public async Task<string> GetUserPasswordlByEmailAsync(string email) 
         {
-            var user = await _context.Set<User>().AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.Set<User>().AsNoTracking().FirstOrDefaultAsync(x => x.Email == email)
+                ?? throw new Exception("Password Invalid!");
             return user.PasswordHash;   
         }
 
