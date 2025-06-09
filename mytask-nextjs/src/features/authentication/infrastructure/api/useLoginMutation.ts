@@ -7,7 +7,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 
-const useLogin = () => {
+interface useLoginMutationProps{
+    onSuccessRedirect: (url: string) => void;
+}
+
+const useLoginMutation = ({onSuccessRedirect}:useLoginMutationProps) => {
     const queryClient = useQueryClient();
     const authRepositoryRef = useRef<IAuthRepository| null>(null);
     const authCommandHandlerRef = useRef<AuthenticateUserCommandHandler | null>(null);
@@ -21,18 +25,16 @@ const useLogin = () => {
     
     return useMutation({
         mutationFn: async (data : AuthenticateUserCommand) =>{
-            console.log("Executing login with data:", data);
-            return await authCommandHandler.execute(data);
-        },
-        onSuccess: (response: AuthResponseModel) => {
 
-            console.log("Login successful, response:", response);
-            
-            queryClient.setQueryData(["token"], response.token);
+            const response = authCommandHandler?.execute(data);
+            return response;
+        },
+        onSuccess: async(response: AuthResponseModel) => {
+
             queryClient.setQueryData(["fullname"], response.fullName);
             queryClient.setQueryData(["role"], response.role);
-
             toast.success("Login successful");
+            onSuccessRedirect('/home');
         },
         onError: (error) => {
             toast.error("Login failed");
@@ -41,4 +43,4 @@ const useLogin = () => {
     });
 };
 
-export default useLogin;
+export default useLoginMutation;

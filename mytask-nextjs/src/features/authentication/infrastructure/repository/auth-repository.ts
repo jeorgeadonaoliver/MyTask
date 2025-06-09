@@ -8,7 +8,9 @@ export class AuthRepository implements IAuthRepository {
     async login(data: AuthenticateUserCommand): Promise<AuthResponseModel> {
         try
         {
-            const response = await api.post<AuthResponseModel>('api/v1/Auth/Login',data);
+            const response = await api.post<AuthResponseModel>('api/v1/Auth/Login',data,{
+                withCredentials: true,
+            });
             return response.data;
 
         }catch(error)

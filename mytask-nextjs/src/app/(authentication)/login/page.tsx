@@ -14,7 +14,7 @@ export default function Login() {
              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                Forgot your password?
                <a className="text-blue-600 decoration-2 hover:underline font-medium" href="#">
-                 Login here
+                 Click here
                </a>
              </p>
           </div>

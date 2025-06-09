@@ -1,15 +1,21 @@
-import Link from "next/link";
+import Card from "@/app/shared/components/card";
+import { cookies } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get('authToken')?.value;
+
+  console.log('Token from cookies:', token);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Welcome to the Home Page!</h1>
-        <p className="text-center mb-4">This is the home page of our application.</p>
-        <Link href="/main" className="text-blue-500 hover:underline">
-          Go to Main Page
-        </Link>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <Card title={""} icon={undefined}>
+        <div className="w-full max-w-md p-6 text-white rounded-lg">
+          <h1 className="text-2xl font-bold text-center mb-6">Welcome to the Home Page!</h1>
+          <p className="text-center mb-4">This is the home page of our application.</p>
+        </div>
+      </Card>
+      
     </div>
   );
 }

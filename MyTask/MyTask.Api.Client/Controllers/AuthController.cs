@@ -27,7 +27,30 @@ namespace MyTask.Api.Client.Controllers
         public async Task<IActionResult> Login(AuthenticateUserCommand cmd)
         {
             var result = await _mediator.Send(cmd);
-            return result != null ? Ok(result) : Unauthorized();
+
+            if (result is null) {
+
+                return Unauthorized("Invalid email or password.");
+            }
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false, // true in production
+                SameSite = SameSiteMode.Lax,
+                Expires = DateTimeOffset.UtcNow.AddDays(1),
+                Path = "/"
+            };
+
+            Response.Cookies.Append("authToken", result.token, cookieOptions);
+
+            return Ok(new { 
+                message = "Login successful!",
+                role = result.role,
+                fullName = result.fullName,
+            });
+
+            //return result != null ? Ok(result) : Unauthorized();
         }
 
         [HttpPost("RegisterUser")]
