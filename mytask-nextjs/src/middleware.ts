@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-
-//Define paths that do NOT require authentication
-//const publicPaths = ['/login']; // Add any other public pages
-
 export async function middleware(request: NextRequest) {
 
-    const authToken = request.cookies.get('authToken')?.value;
-    console.log('Auth Token from cookies:', authToken);
-
     const { pathname } = request.nextUrl;
+    const authToken = request.cookies.get('authToken')?.value;
+
     const isAuthenticated = !!authToken; 
     //const isPublicPath = publicPaths.includes(pathname);
   
@@ -26,7 +21,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
       
-    if (authToken && pathname === '/') {
+    if (isAuthenticated && pathname === '/') {
         return NextResponse.redirect(new URL('/home', request.url)); // Or '/home'
     }
 
