@@ -1,4 +1,5 @@
-export type RegisterUserCommand = {
+export type UserEntity = {
+    id: string;
     fullName: string;
     email: string;
     passwordHash: string;

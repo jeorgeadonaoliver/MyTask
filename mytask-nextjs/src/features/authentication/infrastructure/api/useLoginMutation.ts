@@ -1,6 +1,6 @@
 import { AuthenticateUserCommand } from "@/features/authentication/application/command/authenticate-user.command";
 import { AuthenticateUserCommandHandler } from "@/features/authentication/application/command/authenticate-user.command-handler";
-import { AuthResponseModel } from "@/features/authentication/domain/entities/auth-response.model";
+import { AuthResponseModel } from "@/features/authentication/domain/entities/auth-respons-entity";
 import { IAuthRepository } from "@/features/authentication/domain/interface/i-auth-repository";
 import { AuthRepository } from "@/features/authentication/infrastructure/repository/auth-repository";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

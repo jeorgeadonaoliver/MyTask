@@ -1,5 +1,5 @@
 // import { NextResponse } from "next/server";
-import { AuthResponseModel } from "../../domain/entities/auth-response.model";
+import { AuthResponseModel } from "../../domain/entities/auth-respons-entity";
 import { IAuthRepository } from "../../domain/interface/i-auth-repository";
 import { AuthenticateUserCommand } from "../command/authenticate-user.command";
 

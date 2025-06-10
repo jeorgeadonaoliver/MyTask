@@ -1,6 +1,6 @@
-import api from '@/api/api';
+import axiosBase from '@/api/axiosBase';
 import { AuthenticateUserCommand } from '../../application/command/authenticate-user.command'
-import { AuthResponseModel } from '../../domain/entities/auth-response.model';
+import { AuthResponseModel } from '../../domain/entities/auth-respons-entity';
 import { IAuthRepository } from '@/features/authentication/domain/interface/i-auth-repository';
 
 export class AuthRepository implements IAuthRepository {
@@ -8,7 +8,7 @@ export class AuthRepository implements IAuthRepository {
     async login(data: AuthenticateUserCommand): Promise<AuthResponseModel> {
         try
         {
-            const response = await api.post<AuthResponseModel>('api/v1/Auth/Login',data,{
+            const response = await axiosBase.post<AuthResponseModel>('api/v1/Auth/Login',data,{
                 withCredentials: true,
             });
             return response.data;

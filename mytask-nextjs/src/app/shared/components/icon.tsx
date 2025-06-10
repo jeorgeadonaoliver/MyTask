@@ -1,0 +1,17 @@
+interface SidebarLogoProps {
+    icon: React.ReactNode;
+    text: string;
+};
+
+const Icon = ({icon, text}:SidebarLogoProps) => {
+    return (
+        <div className="p-1">
+            <div className="mt-4 mb-4 flex flex-col items-center justify-center text-center">
+                {icon}
+                <span className="text-[12px] text-white">{text}</span>
+            </div>
+        </div>
+    );
+};
+
+export default Icon;

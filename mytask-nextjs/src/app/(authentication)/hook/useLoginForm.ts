@@ -1,22 +1,17 @@
 'use client';
 
+import useForm from "@/app/shared/hook/useForm";
 import useLoginMutation from "@/features/authentication/infrastructure/api/useLoginMutation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const useLoginForm = () => {
     const router = useRouter();
     const login = useLoginMutation({onSuccessRedirect: (url) => router.push(url)});
-    const[formData, setFormData] = useState({
+
+    const{formData, handleChange} = useForm({
         email: '',
         password: ''
     });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,[e.target.name]: e.target.value
-        });
-    };
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,7 +19,6 @@ const useLoginForm = () => {
     };
 
     return {
-       formData, 
        handleChange, 
        onSubmit,
        login   
