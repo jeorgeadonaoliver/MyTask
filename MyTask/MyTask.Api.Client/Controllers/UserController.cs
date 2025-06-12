@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyTask.Application.Features.UserManagement.Query.GetDataForUserRegistrationForm;
+using MyTask.Application.Features.UserManagement.Query.GetUser;
 
 namespace MyTask.Api.Client.Controllers
 {
@@ -9,10 +11,24 @@ namespace MyTask.Api.Client.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        [HttpGet("users")]
-        public async Task<IActionResult> GetAllUsers() 
+        private readonly IMediator _mediator;
+        public UserController(IMediator mediator)
         {
-            return Ok("This endpoint will return all users.");
+            _mediator = mediator;
+        }
+
+        [HttpGet("GetRoleForUserRegistrationForm")]
+        public async Task<IActionResult> GetRoleForUserRegistrationForm() 
+        {
+            var data = await _mediator.Send(new GetDataForUserRegistrationFormQuery());
+            return Ok(data);
+        }
+
+        [HttpGet("GetUsers")]
+        public async Task<IActionResult> GetUsers() {
+
+            var data = await _mediator.Send(new GetUserQuery());
+            return Ok(data);
         }
     }
 }

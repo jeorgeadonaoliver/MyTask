@@ -36,6 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RateLimitingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowLocalHost3000");

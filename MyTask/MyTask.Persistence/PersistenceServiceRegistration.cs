@@ -19,7 +19,7 @@ namespace MyTask.Persistence
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             //services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             //services.AddScoped<IEmployeeProjectsRepository, EmployeeProjectRepository>();
