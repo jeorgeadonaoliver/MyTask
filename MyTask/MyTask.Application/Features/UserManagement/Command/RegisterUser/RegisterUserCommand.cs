@@ -4,7 +4,7 @@ namespace MyTask.Application.Features.UserManagement.Command.RegisterUser;
 
 public class RegisterUserCommand : IRequest<Guid>
 {
-
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string FullName { get; set; } = null!;
 
     public string Email { get; set; } = null!;

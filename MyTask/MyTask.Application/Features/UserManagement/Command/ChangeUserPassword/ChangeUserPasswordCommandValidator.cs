@@ -19,6 +19,7 @@ public class ChangeUserPasswordCommandValidator : AbstractValidator<ChangeUserPa
 
     private async Task<bool> IsUserExisting(ChangeUserPasswordCommand cmd, CancellationToken cancellationToken) {
 
-        return await _repository.AnyUserByIdAsync(cmd.Id);
+        var data = await _repository.AnyUserByIdAsync(cmd.Id);
+        return data.Value;
     }
 }

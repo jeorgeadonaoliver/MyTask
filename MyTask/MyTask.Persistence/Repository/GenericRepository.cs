@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyTask.Application.Common;
 using MyTask.Application.Contracts;
 using MyTask.Persistence.MyTaskDb;
 
@@ -12,28 +13,43 @@ namespace MyTask.Persistence.Repository
             _context = context;
         }
 
-        public async Task CreateAsync(T entity)
+        public async Task<Result<bool>> CreateAsync(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
-            await _context.SaveChangesAsync();
+            var rowAffected = await _context.SaveChangesAsync();
+
+            return rowAffected > 0
+                ? Result<bool>.Success(true)
+                : Result<bool>.Failed("Creating Record error!");
         }
 
-        public async Task<IEnumerable<T>> ReadAsync()
+        public async Task<Result<IEnumerable<T>>> ReadAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            var data = await _context.Set<T>().ToListAsync();
+            return data is not null
+                ? Result<IEnumerable<T>>.Success(data)
+                : Result<IEnumerable<T>>.Failed("Error on Reading Data");
+                
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<Result<bool>> UpdateAsync(T entity)
         {
             _context.Update(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var rowAffected = await _context.SaveChangesAsync();
+
+            return rowAffected > 0
+                ? Result<bool>.Success(true)
+                : Result<bool>.Failed("Error on Updating Record!");
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task<Result<bool>> DeleteAsync(T entity)
         {
             _context.Remove(entity).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
-        }
+            var rowAffected = await _context.SaveChangesAsync();
 
+            return rowAffected > 0
+                ? Result<bool>.Success(true)
+                : Result<bool>.Failed("Error on deleting Record!");
+        }
     }
 }

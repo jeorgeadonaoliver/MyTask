@@ -4,7 +4,7 @@ import { GoProjectSymlink, GoTasklist } from "react-icons/go";
 import { HiOutlineUsers } from "react-icons/hi";
 import { PiAndroidLogoFill } from "react-icons/pi";
 import SidebarButtonGroup from "./sidebar-button-group";
-import { BiLogOut } from "react-icons/bi";
+import LogoutButton from "./logout-button";
 
 const Sidebar = () => {
 
@@ -25,9 +25,7 @@ const Sidebar = () => {
             <div className="flex-grow overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800">
                <SidebarButtonGroup icons={iconGroup} />
             </div>
-            <div className="pb-4 hover:scale-120">
-                <IconButton icon={<BiLogOut size={30} />} text={"Logout"} /> 
-            </div>
+            <LogoutButton />            
         </div>
     );
 };

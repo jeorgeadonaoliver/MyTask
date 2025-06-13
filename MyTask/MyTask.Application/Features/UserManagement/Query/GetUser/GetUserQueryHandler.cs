@@ -15,7 +15,6 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, IEnumerable<Get
     public async Task<IEnumerable<GetUserQueryDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var data = await _repository.ReadAsync();
-        return data.Select(x => x.MapToGetUserQueryDto()).ToList();
-            
+        return data.Value.Select(x => x.MapToGetUserQueryDto()).ToList();         
     }
 }

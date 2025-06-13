@@ -15,6 +15,6 @@ public class GetDataForUserRegistrationFormQueryHandler : IRequestHandler<GetDat
     public async Task<IEnumerable<GetDataForUserRegistrationFormQueryDto>> Handle(GetDataForUserRegistrationFormQuery request, CancellationToken cancellationToken)
     {
         var data = await _repository.ReadAsync();
-        return data.Select(u => u.MapToGetDataForUserRegistrationForm()).ToList();
+        return data.Value.Select(u => u.MapToGetDataForUserRegistrationForm()).ToList();
     }
 }

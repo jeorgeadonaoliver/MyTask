@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyTask.Api.Client.Interface;
 using MyTask.Application.Features.AuthenticationManagement.AuthenticateUser;
 using MyTask.Application.Features.UserManagement.Command.ChangeUserPassword;
-using MyTask.Application.Features.UserManagement.Command.RegisterUser;
-using MyTask.Application.Features.UserManagement.Query.GetUserById;
 
 namespace MyTask.Api.Client.Controllers
 {
@@ -12,59 +11,32 @@ namespace MyTask.Api.Client.Controllers
     public class AuthController : ControllerBase
     {
         IMediator _mediator;
-        public AuthController(IMediator mediator)
+        ICookieService _cookieService;
+        public AuthController(IMediator mediator, ICookieService cookieService)
         {
             _mediator = mediator;
+            _cookieService = cookieService;
         }
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassordAsync(ChangeUserPasswordCommand cmd) 
         {
             var result = await _mediator.Send(cmd);
-            return Ok("Change Password Successful!");
+            return Ok(result);
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(AuthenticateUserCommand cmd)
         {
             var result = await _mediator.Send(cmd);
-
-            if (result is null) {
-
-                return Unauthorized("Invalid email or password.");
-            }
-
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false, // true in production
-                SameSite = SameSiteMode.Lax,
-                Expires = DateTimeOffset.UtcNow.AddDays(1),
-                Path = "/"
-            };
-
-            Response.Cookies.Append("authToken", result.token, cookieOptions);
-
-            return Ok(new { 
-                message = "Login successful!",
-                role = result.role,
-                fullName = result.fullName,
-            });
-
-            //return result != null ? Ok(result) : Unauthorized();
-        }
-
-        [HttpPost("RegisterUser")]
-        public async Task<IActionResult> RegisterUser(RegisterUserCommand cmd) 
-        {
-            var newUserId = await _mediator.Send(cmd);
-            return CreatedAtAction(nameof(GetUserById), new { id = newUserId }, newUserId);    
-        }
-
-        [HttpGet("GetUserById/{id}")]
-        public async Task<IActionResult> GetUserById(Guid id) 
-        {
-            var result = await _mediator.Send(new GetUserByIdQuery(id));
+            await _cookieService.SetToken( Response, result.token);
             return Ok(result);
+        }
+
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            Response.Cookies.Delete("authToken");
+            return Ok("Logout successfull!");
         }
     }
 }

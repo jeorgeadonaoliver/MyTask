@@ -3,11 +3,11 @@ import { LoginRequestType, LoginResponseType } from "../types/login";
 import loginRequest from "../api/login-request";
 import { toast } from "react-toastify";
 
-interface useLoginMutationProps{
+interface useLoginUserMutationProps{
     onSuccessRedirect: (url: string) => void;
 }
 
-const useLoginMutation = ({onSuccessRedirect} : useLoginMutationProps) => {
+const useLoginUserMutation = ({onSuccessRedirect} : useLoginUserMutationProps) => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -22,8 +22,6 @@ const useLoginMutation = ({onSuccessRedirect} : useLoginMutationProps) => {
             queryClient.setQueryData(["role"], response.role);
             toast.success("Login successful");
 
-            console.log("Response: ", response);
-
             onSuccessRedirect('/home');
         },
         onError: (error) => {
@@ -33,4 +31,4 @@ const useLoginMutation = ({onSuccessRedirect} : useLoginMutationProps) => {
     });
 }
 
-export default useLoginMutation;
+export default useLoginUserMutation;

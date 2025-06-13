@@ -1,12 +1,13 @@
 using MyTask.Api.Client.Extensions;
+using MyTask.Api.Client.Interface;
 using MyTask.Api.Client.Middleware;
+using MyTask.Api.Client.Service;
 using MyTask.Application;
 using MyTask.Persistence;
 using MyTask.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSecurityService();
@@ -18,6 +19,8 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiServiceExtension();
 
 var app = builder.Build();
 

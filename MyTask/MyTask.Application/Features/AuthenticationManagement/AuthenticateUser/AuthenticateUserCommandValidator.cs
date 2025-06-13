@@ -30,13 +30,14 @@ public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUs
 
     private async Task<bool> IsEmailExist(string email, CancellationToken cancellationToken) 
     {
-        return await _authService.CheckUserEmailExistAsync(email);
+        var result = await _authService.CheckUserEmailExistAsync(email);
+        return result.Value;
     }
 
     private async Task<bool> IsValidPassword(AuthenticateUserCommand cmd, CancellationToken cancellationToken) 
     {
         var passwordHash = await _authService.GetUserPasswordlByEmailAsync(cmd.Email);
-        var isValidPassword = Argon2.Verify(passwordHash, cmd.Password);
+        var isValidPassword = Argon2.Verify(passwordHash.Value, cmd.Password);
 
         return isValidPassword;
     }

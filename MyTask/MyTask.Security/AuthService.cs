@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyTask.Api.Client.MyTaskDbModel;
+using MyTask.Application.Common;
 using MyTask.Application.Contracts;
 using MyTask.Persistence.MyTaskDb;
 using MyTask.Persistence.Repository;
@@ -10,24 +11,28 @@ namespace MyTask.Security
     {
         public AuthService(MyTaskDbContext context) : base(context) { }
 
-        public async Task<string> GetUserPasswordlByEmailAsync(string email) 
+        public async Task<Result<string>> GetUserPasswordlByEmailAsync(string email) 
         {
-            var user = await _context.Set<User>().AsNoTracking().FirstOrDefaultAsync(x => x.Email == email)
-                ?? throw new Exception("Password Invalid!");
-            return user.PasswordHash;   
+            var user = await _context.Set<User>().AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+
+            return user == null 
+                ? Result<string>.Failed("Error on GetUserPasswordlByEmailAsync!")
+                : Result<string>.Success(user.PasswordHash);
         }
 
-        public async Task<bool> CheckUserEmailExistAsync(string email)
+        public async Task<Result<bool>> CheckUserEmailExistAsync(string email)
         {
-            return await _context.Set<User>().AsNoTracking().AnyAsync(x => x.Email == email);
+            var user = await _context.Set<User>().AsNoTracking().AnyAsync(x => x.Email == email);
+            return Result<bool>.Success(user);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<Result<User>> GetUserByEmailAsync(string email)
         {
-            var user = await _context.Set<User>().Include(u => u.UserRoles).AsNoTracking().FirstOrDefaultAsync(x => x.Email == email) ??
-               throw new Exception("User email does not exist");
+            var user = await _context.Set<User>().Include(u => u.UserRoles).AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
 
-            return user;
+            return user == null
+                ? Result<User>.Failed("Error on GetUserByEmailAsync!")
+                : Result<User>.Success(user);
         }
     }
 }

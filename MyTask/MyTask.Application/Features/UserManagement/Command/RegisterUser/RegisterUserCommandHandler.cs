@@ -18,7 +18,8 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, G
         var result = await validator.ValidateAsync(request, cancellationToken);
         result.CheckValidationResult();
 
-        var id = await _repository.CreateUserAsync(request.MapToEntity());
-        return id;
+        var data = await _repository.CreateAsync(request.MapToEntity());
+        
+        return data.Value ? request.Id : Guid.NewGuid();
     }
 }

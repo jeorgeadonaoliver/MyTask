@@ -1,36 +1,11 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import useLoginMutation from "../services/useLoginMutation";
-// import useForm from "@/shared/hooks/useForm";
+import useLoginUserMutation from "../services/useLoginUserMutation";
 import { LoginRequestType } from "../types/login";
 import { LoginSchema } from "../validators/loginSchema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from "react-hook-form";
-
-
-// const useLoginForm = () => {
-//     const router = useRouter();
-//     const login = useLoginMutation({onSuccessRedirect: (url) => router.push(url)});
-
-//     const{formData, handleChange} = useForm({
-//         email: '',
-//         password: ''
-//     });
-
-//     const onSubmit = (e: React.FormEvent) => {
-//         e.preventDefault();
-//         login.mutate(formData);
-//     };
-
-//     return {
-//        handleChange, 
-//        onSubmit,
-//        login   
-//     };
-// };
-
-// export default useLoginForm;
 
 const useLoginForm = () => {
     const router = useRouter();
@@ -42,10 +17,9 @@ const useLoginForm = () => {
         },
     });
 
-    const loginMutation = useLoginMutation({onSuccessRedirect: (url) => router.push(url)});
+    const loginMutation = useLoginUserMutation({onSuccessRedirect: (url) => router.push(url)});
 
     const onSubmit = handleSubmit(async (data: LoginRequestType) => {
-        console.log("Validated form data:", data);
         loginMutation.mutate(data);
     });
 

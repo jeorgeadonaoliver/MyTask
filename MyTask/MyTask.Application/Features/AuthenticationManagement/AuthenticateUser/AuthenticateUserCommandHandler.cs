@@ -24,11 +24,11 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
         result.CheckValidationResult();
 
         var data = await _authservice.GetUserByEmailAsync(request.Email);
-        var token = await _jwtservice.GenerateToken(request.MapToEntity(), data.UserRoles.Name);
+        var token = await _jwtservice.GenerateToken(request.MapToEntity(), data.Value.UserRoles.Name);
 
-        _responseDto.fullName = data.FullName;
+        _responseDto.fullName = data.Value.FullName;
         _responseDto.token = token;
-        _responseDto.role = data.UserRoles.Name;
+        _responseDto.role = data.Value.UserRoles.Name;
 
         return _responseDto;
     }

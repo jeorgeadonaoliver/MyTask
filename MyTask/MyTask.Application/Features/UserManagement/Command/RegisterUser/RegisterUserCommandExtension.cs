@@ -9,7 +9,7 @@ public static class RegisterUserCommandExtension
 
         return new User()
         {
-            UserId = Guid.NewGuid(),
+            UserId = cmd.Id,
             FullName = cmd.FullName,
             Email = cmd.Email,
             PasswordHash = Argon2.Hash(cmd.PasswordHash),

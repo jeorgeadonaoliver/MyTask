@@ -15,7 +15,7 @@ namespace MyTask.Application.Features.UserManagement.Query.GetUserById
         public async Task<GetUserByIdDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var data = await _repository.GetUserByIdAsync(request.id);
-            return data.MapToGetUserByIdDto();
+            return data.Value.MapToGetUserByIdDto();
 
         }
     }

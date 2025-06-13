@@ -23,7 +23,8 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
 
     private async Task<bool> IsEmailExist(string email, CancellationToken cancellationToken) { 
     
-        return !await _repository.AnyUserByEmailAsync(email);
+        var data = await _repository.AnyUserByEmailAsync(email);
+        return !data.Value;
     }
 
 }

@@ -6,9 +6,6 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const authToken = request.cookies.get('authToken')?.value;
 
-    console.log(`Middleware Pathname: ${pathname}`);
-    console.log(`Middleware AuthToken: ${authToken}`); // <--- IMPORTANT: Check this
-
     const isAuthenticated = !!authToken; 
     //const isPublicPath = publicPaths.includes(pathname);
 
@@ -29,7 +26,7 @@ export async function middleware(request: NextRequest) {
       
     if (isAuthenticated && pathname === '/') {
          console.log('Middleware: Authenticated, on /, redirecting to /home.');
-        return NextResponse.redirect(new URL('/home', request.url)); // Or '/home'
+        return NextResponse.redirect(new URL('/home', request.url));
     }
     console.log(`Middleware: Allowing access for ${pathname}`);
     return NextResponse.next();
