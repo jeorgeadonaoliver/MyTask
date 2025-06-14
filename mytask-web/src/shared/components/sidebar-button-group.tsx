@@ -13,7 +13,7 @@ const SidebarButtonGroup = ({ icons }: SidebarButtonGroupProps) => {
             {icons.map((icon, index) => (
                 <div
                     key={index}
-                    className={`rounded-2xl w-21 p-0 ${activeIndex === index ? 'text-white bg-neutral-700' : 'text-white bg-neutral-800'}`}
+                    className={`rounded-xl w-19 p-0 ${activeIndex === index ? 'text-white bg-neutral-700' : 'text-white bg-neutral-800'}`}
                     onClick={() => setActiveIndex(index)}>
                     {icon}
                 </div>

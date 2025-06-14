@@ -8,7 +8,7 @@ const Header = () => {
     const fullName = queryClient.getQueryData<string>(["fullname"]);
 
     return (
-        <header className="fixed top-0 left-22 w-[calc(100%-100px)] shadow-md p-4 flex justify-between items-center bg-stone-950">
+        <header className="fixed top-0 left-22 w-[calc(100%-100px)] p-4 flex justify-between items-center bg-stone-950">
             <h1 className="text-lg font-bold">My Header</h1>
             <div className="flex gap-4">
                 <div className="hover:scale-125 text-white">
