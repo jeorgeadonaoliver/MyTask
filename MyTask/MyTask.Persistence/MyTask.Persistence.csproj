@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MyTask.Domain\MyTask.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
 </Project>

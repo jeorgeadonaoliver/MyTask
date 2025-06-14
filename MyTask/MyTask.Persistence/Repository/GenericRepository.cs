@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using MyTask.Application.Common;
 using MyTask.Application.Contracts;
 using MyTask.Persistence.MyTaskDb;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace MyTask.Persistence.Repository
 {
@@ -28,18 +32,7 @@ namespace MyTask.Persistence.Repository
             var data = await _context.Set<T>().ToListAsync();
             return data is not null
                 ? Result<IEnumerable<T>>.Success(data)
-                : Result<IEnumerable<T>>.Failed("Error on Reading Data");
-                
-        }
-
-        public async Task<Result<bool>> UpdateAsync(T entity)
-        {
-            _context.Update(entity).State = EntityState.Modified;
-            var rowAffected = await _context.SaveChangesAsync();
-
-            return rowAffected > 0
-                ? Result<bool>.Success(true)
-                : Result<bool>.Failed("Error on Updating Record!");
+                : Result<IEnumerable<T>>.Failed("Error on Reading Data");           
         }
 
         public async Task<Result<bool>> DeleteAsync(T entity)
@@ -50,6 +43,18 @@ namespace MyTask.Persistence.Repository
             return rowAffected > 0
                 ? Result<bool>.Success(true)
                 : Result<bool>.Failed("Error on deleting Record!");
+        }
+
+        public async Task<Result<bool>> UpdateAsync(Expression<Func<T, bool>> predicate, LambdaExpression updateExpression)
+        {
+            var typedUpdateExpression = (Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>>)updateExpression;
+            var result = await _context.Set<T>()
+                 .Where(predicate)
+                 .ExecuteUpdateAsync(typedUpdateExpression);
+
+            return result > 0
+                ? Result<bool>.Success(true)
+                : Result<bool>.Failed($"Updating {typeof(T).Name} Failed!");
         }
     }
 }

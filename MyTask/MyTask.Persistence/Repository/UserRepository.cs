@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MyTask.Api.Client.MyTaskDbModel;
 using MyTask.Application.Common;
 using MyTask.Application.Contracts;
 using MyTask.Persistence.MyTaskDb;
+using System.Linq.Expressions;
 
 namespace MyTask.Persistence.Repository
 {
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
         public UserRepository(MyTaskDbContext context) : base(context) { }
-
 
         public async Task<Result<User>> GetUserByIdAsync(Guid guid) 
         {
@@ -45,14 +46,30 @@ namespace MyTask.Persistence.Repository
             return Result<bool>.Success(data);
         }
 
-        public async Task<Result<bool>> ChangeUserPasswordAsync(User user)
+        public async Task<bool> ChangeUserPasswordAsync(User user)
         {
-            var rowAffected = await _context.Users.Where(x => x.UserId == user.UserId)
-                .ExecuteUpdateAsync(y => y.SetProperty(z => z.PasswordHash, user.PasswordHash));
+            Expression<Func<SetPropertyCalls<User>, SetPropertyCalls<User>>> expression =
+                setter => setter
+                .SetProperty(sp => sp.PasswordHash, user.PasswordHash);
 
-            return rowAffected > 0 
-                ? Result<bool>.Success(true) 
-                : Result<bool>.Failed("Error on ChangeUserPasswordAsync");
+            var rowAffected = await UpdateAsync(x => x.UserId == user.UserId, expression);
+
+            return rowAffected.Value;
+        }
+
+        public async Task<bool> UpdateUserAsync(User user) 
+        {
+            Expression<Func<SetPropertyCalls<User>, SetPropertyCalls<User>>> expression =
+                setter => setter
+                .SetProperty(sp => sp.UserId, user.UserId)
+                .SetProperty(sp => sp.RoleId, user.RoleId)
+                .SetProperty(sp => sp.AvatarUrl, user.AvatarUrl)
+                .SetProperty(sp => sp.FullName, user.FullName)
+                .SetProperty(sp => sp.IsActive, user.IsActive)
+                .SetProperty(sp => sp.UpdatedAt, user.UpdatedAt);
+
+            var rowAffected = await UpdateAsync(x => x.UserId == user.UserId, expression);
+            return rowAffected.Value;
         }
     }
 }

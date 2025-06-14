@@ -15,6 +15,8 @@ public interface IUserRepository : IGenericRepository<User>
 
     public Task<Result<bool>> GetUsetByIdAndPasswordAsync(Guid guid, string email);
 
-    public Task<Result<bool>> ChangeUserPasswordAsync(User user);
+    public Task<bool> ChangeUserPasswordAsync(User user);
+
+    public Task<bool> UpdateUserAsync(User user);
 
 }

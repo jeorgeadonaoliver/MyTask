@@ -16,4 +16,10 @@
     <ProjectReference Include="..\MyTask.Domain\MyTask.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ProjectManagement\Command\" />
+    <Folder Include="Features\TaskManagement\Command\" />
+    <Folder Include="Features\TaskManagement\Query\" />
+  </ItemGroup>
+
 </Project>

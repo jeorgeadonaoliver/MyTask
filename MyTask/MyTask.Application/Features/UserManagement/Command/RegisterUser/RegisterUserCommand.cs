@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using MyTask.Application.Common.Dto;
+using System.Numerics;
 
 namespace MyTask.Application.Features.UserManagement.Command.RegisterUser;
 
-public class RegisterUserCommand : IRequest<Guid>
+public class RegisterUserCommand : BaseDto, IRequest<bool>
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public string FullName { get; set; } = null!;
 
     public string Email { get; set; } = null!;

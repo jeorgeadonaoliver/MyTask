@@ -21,7 +21,7 @@ namespace MyTask.Api.Client.Controllers
         public async Task<IActionResult> ChangePassordAsync(ChangeUserPasswordCommand cmd) 
         {
             var result = await _mediator.Send(cmd);
-            return Ok(result);
+            return Ok(result ? "Change password successful!" : "Failed on changing password!");
         }
 
         [HttpPost("Login")]
@@ -33,7 +33,7 @@ namespace MyTask.Api.Client.Controllers
         }
 
         [HttpGet("Logout")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             Response.Cookies.Delete("authToken");
             return Ok("Logout successfull!");
