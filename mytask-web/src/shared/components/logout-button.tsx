@@ -10,7 +10,7 @@ const LogoutButton = () => {
 
     return(
         <>
-            <div className="pb-4 hover:scale-120" onClick={handleClick}>
+            <div className="pb-4 overflow-hidden" onClick={handleClick}>
                 <IconButton icon={<BiLogOut size={30} />} text={"Logout"} /> 
             </div>
         </>
