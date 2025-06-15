@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using MyTask.Application.Common.Extension;
 using MyTask.Application.Contracts;
 using System;
@@ -12,9 +13,11 @@ namespace MyTask.Application.Features.UserManagement.Command.UpdateUser
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
     {
         private readonly IUserRepository _repository;
-        public UpdateUserCommandHandler(IUserRepository repository)
+        private readonly IMemoryCache _memoryCache;
+        public UpdateUserCommandHandler(IUserRepository repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
 
         public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -25,6 +28,7 @@ namespace MyTask.Application.Features.UserManagement.Command.UpdateUser
 
             request.UpdatedAt = DateTime.Now;
             var data = await _repository.UpdateUserAsync(request.MapToUser());
+            _memoryCache.Remove($"GetUserByIdQuery:{request.Id}");
             return data;
         }
     }

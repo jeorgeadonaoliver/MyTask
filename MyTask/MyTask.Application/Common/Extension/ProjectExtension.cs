@@ -18,7 +18,6 @@ namespace MyTask.Application.Common.Extension
                 CreatedAt = project.CreatedAt,
                 Description = project.Description,
                 Name = project.Name,
-                Owner = project.Owner,
                 OwnerId = project.OwnerId,  
                 StatusId = project.StatusId
             };

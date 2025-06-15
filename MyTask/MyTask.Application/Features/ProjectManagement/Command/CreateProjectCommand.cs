@@ -1,4 +1,4 @@
-﻿using MyTask.Api.Client.MyTaskDbModel;
+﻿using MediatR;
 using MyTask.Application.Common.Dto;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyTask.Application.Features.ProjectManagement.Query.GetAllProjects
+namespace MyTask.Application.Features.ProjectManagement.Command
 {
-    public class GetAllProjectQueryDto :BaseDto
+    public class CreateProjectCommand : BaseDto, IRequest<bool>
     {
         public string Name { get; set; } = null!;
 
@@ -19,6 +19,5 @@ namespace MyTask.Application.Features.ProjectManagement.Query.GetAllProjects
         public Guid StatusId { get; set; }
 
         public DateTime CreatedAt { get; set; }
-
     }
 }

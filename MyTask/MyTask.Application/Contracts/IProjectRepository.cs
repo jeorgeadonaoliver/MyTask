@@ -9,5 +9,6 @@ namespace MyTask.Application.Contracts
 {
     public interface IProjectRepository : IGenericRepository<Project>
     {
+        public Task<bool> IsProjectExist(string name);
     }
 }

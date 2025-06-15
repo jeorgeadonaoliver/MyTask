@@ -5,6 +5,7 @@ using MyTask.Application.Features.UserManagement.Command.RegisterUser;
 using MyTask.Application.Features.UserManagement.Command.UpdateUser;
 using MyTask.Application.Features.UserManagement.Query.GetDataForUserRegistrationForm;
 using MyTask.Application.Features.UserManagement.Query.GetUser;
+using MyTask.Application.Features.UserManagement.Query.GetUserById;
 
 namespace MyTask.Api.Client.Controllers
 {
@@ -30,6 +31,13 @@ namespace MyTask.Api.Client.Controllers
         public async Task<IActionResult> GetUsers() 
         {
             var data = await _mediator.Send(new GetUserQuery());
+            return Ok(data);
+        }
+
+        [HttpGet("GetUserById/{id}")]
+        public async Task<IActionResult> GetUserById(Guid id) 
+        {
+            var data = await _mediator.Send(new GetUserByIdQuery(id));
             return Ok(data);
         }
 
