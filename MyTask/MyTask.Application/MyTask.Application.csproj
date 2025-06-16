@@ -20,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\SprintManagement\Command\CreateSprint\" />
-    <Folder Include="Features\SprintManagement\Command\UpdateSprint\" />
-    <Folder Include="Features\SprintStatusManagement\Command\" />
     <Folder Include="Features\TaskManagement\Command\" />
     <Folder Include="Features\TaskManagement\Query\" />
   </ItemGroup>
