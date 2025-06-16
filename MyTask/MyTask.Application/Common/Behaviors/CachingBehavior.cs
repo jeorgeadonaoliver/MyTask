@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyTask.Application.Common.Caching
+namespace MyTask.Application.Common.Behaviors
 {
     public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
@@ -25,11 +25,8 @@ namespace MyTask.Application.Common.Caching
 
             if (_cache.TryGetValue<TResponse>(cacheable.CacheKey, out var cachedResponse))
             {
-                Console.WriteLine($"Cache hit: {cacheable.CacheKey}");
                 return cachedResponse!;
             }
-
-            Console.WriteLine($"Cache miss: {cacheable.CacheKey} — adding to cache.");
 
             var response = await next();
 

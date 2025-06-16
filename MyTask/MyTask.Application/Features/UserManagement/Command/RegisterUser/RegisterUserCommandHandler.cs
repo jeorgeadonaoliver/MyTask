@@ -16,10 +16,6 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, b
 
     public async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var validator = new RegisterUserCommandValidator(_repository);
-        var result = await validator.ValidateAsync(request, cancellationToken);
-        result.CheckValidationResult();
-
         await _unitOfWork.BeginTransactionAsync();
         try 
         {
@@ -31,6 +27,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, b
         }
         catch (Exception ex) 
         {
+            Console.WriteLine($"Error on Unitofwork RegisterCommand: {ex}");
             await _unitOfWork.RollbackTransactionAsync();
             return false;
         }

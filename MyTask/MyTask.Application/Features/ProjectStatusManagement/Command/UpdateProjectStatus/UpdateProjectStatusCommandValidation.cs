@@ -32,7 +32,16 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.UpdateProj
 
         private async Task<bool> IsProjectStatusIdExist(Guid guid, CancellationToken cancellationToken) 
         {
-            return await _repository.IsProjectStatusExist(guid);
+            try
+            {
+                return await _repository.IsProjectStatusExist(guid);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsProjectStatusIdExist: {ex}");
+                return false;
+            }
+
         }
     }
 }

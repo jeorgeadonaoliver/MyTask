@@ -32,7 +32,16 @@ namespace MyTask.Application.Features.RoleManagement.Command.UpdateUserRole
 
         private async Task<bool> IsUserRoleExist(Guid guid, CancellationToken cancellationToken) 
         {
-            return await _repository.IsUserRoleExistById(guid);
+            try
+            {
+                return await _repository.IsUserRoleExistById(guid);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsUserRoleExist method: {ex}");
+                return false;
+            }
+
         }
     }
 }

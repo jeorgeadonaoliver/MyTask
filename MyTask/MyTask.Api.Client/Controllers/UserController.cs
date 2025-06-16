@@ -51,6 +51,7 @@ namespace MyTask.Api.Client.Controllers
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand command)
         {
+            command.UpdatedAt = DateTime.UtcNow;
             var data = await _mediator.Send(command);
             return Ok(data ? "Update user successful!" : "Failed on updateing user!");
         }

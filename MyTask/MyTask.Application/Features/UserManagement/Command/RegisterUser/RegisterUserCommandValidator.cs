@@ -21,10 +21,19 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
             .WithMessage("Email already Exist. Please proceed to login!");
     }
 
-    private async Task<bool> IsEmailExist(string email, CancellationToken cancellationToken) { 
-    
-        var data = await _repository.AnyUserByEmailAsync(email);
-        return !data.Value;
+    private async Task<bool> IsEmailExist(string email, CancellationToken cancellationToken) 
+    {
+        try 
+        {
+            var data = await _repository.AnyUserByEmailAsync(email);
+            return !data.Value;
+        } 
+        catch (Exception ex) 
+        {
+            Console.WriteLine($"Error on IsEmailExist method: {ex}");
+            return false;
+        }
+
     }
 
 }

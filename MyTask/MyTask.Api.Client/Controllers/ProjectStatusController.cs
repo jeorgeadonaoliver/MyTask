@@ -28,7 +28,10 @@ namespace MyTask.Api.Client.Controllers
         [HttpPost("CreateProjectStatus")]
         public async Task<IActionResult> CreateProjectStatus(CreateProjectStatusCommand command)
         {
+            command.Id = Guid.NewGuid();
+            command.CreatedAt = DateTime.UtcNow;
             var result = await _mediator.Send(command);
+
             return Ok(result ? "Create new Project Status Successful!" : "Failed on creating Project Status!");
         }
 

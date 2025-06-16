@@ -19,15 +19,21 @@ namespace MyTask.Application.Features.RoleManagement.Command.CreateUserRole
 
         public async Task<bool> Handle(CreateUserRoleCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateUserRoleCommandValidation(_repository);
-            var result = await validator.ValidateAsync(request, cancellationToken);
-            result.CheckValidationResult();
 
-            request.Id = Guid.NewGuid();
-            request.CreatedAt = DateTime.Now;
-            var data = await _repository.CreateAsync(request.MapToUserRole());
+            try
+            {
+                request.Id = Guid.NewGuid();
+                request.CreatedAt = DateTime.Now;
+                var data = await _repository.CreateAsync(request.MapToUserRole());
 
-            return data.Value;
+                return data.Value;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on CreateUserRoleCommandHandler: {ex}");
+                return false;
+            }
+            
         }
     }
 }

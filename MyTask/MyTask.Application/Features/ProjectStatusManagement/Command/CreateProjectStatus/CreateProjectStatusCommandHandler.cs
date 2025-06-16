@@ -19,16 +19,18 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.CreateProj
 
         public async Task<bool> Handle(CreateProjectStatusCommand request, CancellationToken cancellationToken)
         {
-            request.Id = Guid.NewGuid();
-            request.CreatedAt = DateTime.Now;
+            try 
+            {
+                var response = await _repository.CreateAsync(request.MapToProjectstatus());
+                return response.Value;
+            } 
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on CreateProjectStatusCommand: {ex}");
+                return false;
+            }
 
-            var validator = new CreateProjectStatusCommandValidation(_repository);
-            var result = await validator.ValidateAsync(request, cancellationToken);
-            result.CheckValidationResult();
-
-            var response = await _repository.CreateAsync(request.MapToProjectstatus());
             
-            return response.Value;
         }
     }
 }

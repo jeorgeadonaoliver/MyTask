@@ -19,10 +19,6 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
 
     public async Task<AuthResponseDto> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
-        var validator = new AuthenticateUserCommandValidator(_authservice);
-        var result = await validator.ValidateAsync(request, cancellationToken);
-        result.CheckValidationResult();
-
         var data = await _authservice.GetUserByEmailAsync(request.Email);
         var token = await _jwtservice.GenerateToken(request.MapToEntity(), data.Value.UserRoles.Name);
 

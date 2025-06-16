@@ -22,10 +22,6 @@ namespace MyTask.Application.Features.UserManagement.Command.UpdateUser
 
         public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateUserCommandValidation(_repository);
-            var result = await validator.ValidateAsync(request, cancellationToken);
-            result.CheckValidationResult();
-
             request.UpdatedAt = DateTime.Now;
             var data = await _repository.UpdateUserAsync(request.MapToUser());
             _memoryCache.Remove($"GetUserByIdQuery:{request.Id}");

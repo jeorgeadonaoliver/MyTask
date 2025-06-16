@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MyTask.Api.Client.Interface;
 using MyTask.Api.Client.Service;
-using MyTask.Application.Common.Caching;
 
 namespace MyTask.Api.Client.Extensions
 {
@@ -17,7 +16,6 @@ namespace MyTask.Api.Client.Extensions
             //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RedisCachingBehavior<,>));
 
             services.AddScoped<ICookieService, CookieService> ();
-
             return services;
         }
     }

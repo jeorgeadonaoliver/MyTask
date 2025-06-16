@@ -19,12 +19,16 @@ namespace MyTask.Application.Features.RoleManagement.Command.UpdateUserRole
 
         public async Task<bool> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateUserRoleCommandValidation(_repository);
-            var result = await validator.ValidateAsync(request, cancellationToken);
-            result.CheckValidationResult();
-
-            var data = await _repository.UpdateRoleAsync(request.MapToUserRole());
-            return data;
+            try
+            {
+                var data = await _repository.UpdateRoleAsync(request.MapToUserRole());
+                return data;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on UpdateRoleAsync method: {ex}");
+                return false;
+            }
         }
     }
 }

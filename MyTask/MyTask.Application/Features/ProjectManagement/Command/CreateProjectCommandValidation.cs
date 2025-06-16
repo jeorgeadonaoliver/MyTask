@@ -33,7 +33,16 @@ namespace MyTask.Application.Features.ProjectManagement.Command
 
         private async Task<bool> IsProjectAlreadyExist(string name, CancellationToken cancellationToken) 
         {
-            return !await _repository.IsProjectExist(name);
+            try 
+            {
+                return !await _repository.IsProjectExist(name);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsProjectAlreadyExist method: {ex}");
+                return false;
+            }
+
         }
     }
 }

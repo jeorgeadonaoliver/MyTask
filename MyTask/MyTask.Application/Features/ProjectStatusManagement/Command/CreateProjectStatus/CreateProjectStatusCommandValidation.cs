@@ -29,7 +29,16 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.CreateProj
 
         private async Task<bool> IsProjectStatusNameExist(string statusName, CancellationToken cancellationToken) 
         {
-            return !await _repository.IsProjectStatusExist(statusName);
+            try
+            {
+                return !await _repository.IsProjectStatusExist(statusName);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsProjectStatusNameExist method: {ex}");
+                return false;
+            }
+
         }
     }
 }

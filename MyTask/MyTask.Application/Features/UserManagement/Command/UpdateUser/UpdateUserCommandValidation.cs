@@ -27,8 +27,17 @@ namespace MyTask.Application.Features.UserManagement.Command.UpdateUser
 
         private async Task<bool> IsUserExist(Guid guid, CancellationToken cancellationToken) 
         {
-            var data = await _repository.AnyUserByIdAsync(guid);
-            return data.Value;
+            try 
+            {
+                var data = await _repository.AnyUserByIdAsync(guid);
+                return data.Value;
+            } 
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsUserExist method: {ex}");
+                return false;
+            }
+
         }
     }
 }

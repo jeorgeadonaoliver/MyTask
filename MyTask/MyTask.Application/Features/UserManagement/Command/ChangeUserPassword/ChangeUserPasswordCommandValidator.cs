@@ -17,9 +17,18 @@ public class ChangeUserPasswordCommandValidator : AbstractValidator<ChangeUserPa
             .WithMessage("User is not existing!");
     }
 
-    private async Task<bool> IsUserExisting(ChangeUserPasswordCommand cmd, CancellationToken cancellationToken) {
+    private async Task<bool> IsUserExisting(ChangeUserPasswordCommand cmd, CancellationToken cancellationToken) 
+    {
+        try 
+        {
+            var data = await _repository.AnyUserByIdAsync(cmd.Id);
+            return data.Value;
+        } 
+        catch (Exception ex) 
+        {
+            Console.WriteLine($"Error on IsUserExisting method: {ex}");
+            return false;
+        }
 
-        var data = await _repository.AnyUserByIdAsync(cmd.Id);
-        return data.Value;
     }
 }

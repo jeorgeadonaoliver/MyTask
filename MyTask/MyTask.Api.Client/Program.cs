@@ -1,10 +1,6 @@
-using MediatR;
 using MyTask.Api.Client.Extensions;
-using MyTask.Api.Client.Interface;
 using MyTask.Api.Client.Middleware;
-using MyTask.Api.Client.Service;
 using MyTask.Application;
-using MyTask.Application.Common.Caching;
 using MyTask.Persistence;
 using MyTask.Security;
 
@@ -24,7 +20,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApiServiceExtension();
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
 
 
 var app = builder.Build();

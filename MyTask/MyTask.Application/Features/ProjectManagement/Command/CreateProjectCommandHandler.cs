@@ -23,12 +23,6 @@ namespace MyTask.Application.Features.ProjectManagement.Command
 
         public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-            request.Id = Guid.NewGuid();
-            request.CreatedAt = DateTime.UtcNow;
-
-            var validator = new CreateProjectCommandValidation(_repository);
-            var result = await validator.ValidateAsync(request, cancellationToken);
-            result.CheckValidationResult();
 
             var response = await _repository.CreateAsync(request.MapToProject());
             _memoryCache.Remove("GetAllProjectQuery");

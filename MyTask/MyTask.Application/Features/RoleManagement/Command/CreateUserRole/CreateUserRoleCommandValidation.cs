@@ -29,7 +29,16 @@ namespace MyTask.Application.Features.RoleManagement.Command.CreateUserRole
 
         private async Task<bool> IsUserRoleExist(string name, CancellationToken cancellationToken)
         {
-            return !await _repository.IsUserRoleExistByName(name);
+            try
+            {
+                return !await _repository.IsUserRoleExistByName(name);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error on IsUserRoleExist method: {ex}");
+                return false;
+            }
+
         }
     }
 }
