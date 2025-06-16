@@ -25,6 +25,7 @@ namespace MyTask.Application.Features.UserManagement.Command.UpdateUser
             request.UpdatedAt = DateTime.Now;
             var data = await _repository.UpdateUserAsync(request.MapToUser());
             _memoryCache.Remove($"GetUserByIdQuery:{request.Id}");
+            _memoryCache.Remove("GetUserQuery");
             return data;
         }
     }

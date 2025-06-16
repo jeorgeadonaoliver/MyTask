@@ -18,7 +18,7 @@
 
             if (_requestCounts[clientIp] > 50) // Limit exceeded
             {
-                context.Response.StatusCode = 100; // Too Many Requests
+                context.Response.StatusCode = 100;
                 await context.Response.WriteAsync("Rate limit exceeded.");
                 return;
             }

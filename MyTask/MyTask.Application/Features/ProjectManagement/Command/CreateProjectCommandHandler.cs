@@ -23,10 +23,8 @@ namespace MyTask.Application.Features.ProjectManagement.Command
 
         public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-
             var response = await _repository.CreateAsync(request.MapToProject());
             _memoryCache.Remove("GetAllProjectQuery");
-
             return response.Value;
         }
     }

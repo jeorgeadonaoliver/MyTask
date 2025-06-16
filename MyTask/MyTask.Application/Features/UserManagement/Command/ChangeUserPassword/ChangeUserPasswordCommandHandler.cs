@@ -15,9 +15,7 @@ public class ChangeUserPasswordCommandHandler : IRequestHandler<ChangeUserPasswo
 
     public async Task<bool> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
     {
-
         var data = await _repository.ChangeUserPasswordAsync(request.MapToEntity());
         return data;
-
     }
 }

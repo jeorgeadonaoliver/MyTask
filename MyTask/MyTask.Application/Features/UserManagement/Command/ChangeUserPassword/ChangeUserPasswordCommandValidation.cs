@@ -3,10 +3,10 @@ using MyTask.Application.Contracts;
 
 namespace MyTask.Application.Features.UserManagement.Command.ChangeUserPassword;
 
-public class ChangeUserPasswordCommandValidator : AbstractValidator<ChangeUserPasswordCommand>
+public class ChangeUserPasswordCommandValidation : AbstractValidator<ChangeUserPasswordCommand>
 {
     private readonly IUserRepository _repository;
-    public ChangeUserPasswordCommandValidator(IUserRepository repository)
+    public ChangeUserPasswordCommandValidation(IUserRepository repository)
     {
         _repository = repository;
 

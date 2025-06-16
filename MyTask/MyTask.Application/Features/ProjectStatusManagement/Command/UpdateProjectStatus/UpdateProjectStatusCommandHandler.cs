@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using MyTask.Api.Client.MyTaskDbModel;
 using MyTask.Application.Common.Extension;
 using MyTask.Application.Contracts;
@@ -14,15 +15,18 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.UpdateProj
     public class UpdateProjectStatusCommandHandler : IRequestHandler<UpdateProjectStatusCommand, bool>
     {
         private readonly IProjectStatusRepository _repository;
-        public UpdateProjectStatusCommandHandler(IProjectStatusRepository repository)
+        private readonly IMemoryCache _memoryCache;
+        public UpdateProjectStatusCommandHandler(IProjectStatusRepository repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
 
         public async Task<bool> Handle(UpdateProjectStatusCommand request, CancellationToken cancellationToken)
         {
-             var response = await _repository.UpdateProjectStatus(request.MapToProjectStatus());
-             return response;
+            var response = await _repository.UpdateProjectStatus(request.MapToProjectStatus());
+            _memoryCache.Remove("GetAllProjectStatus");
+            return response;
         }
     }
 }

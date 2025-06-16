@@ -4,7 +4,7 @@ using MyTask.Application.Contracts;
 
 namespace MyTask.Application.Features.AuthenticationManagement.AuthenticateUser;
 
-public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
+public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>, IValidationMarker
 {
     IAuthService _authService;
     public AuthenticateUserCommandValidator(IAuthService authService)

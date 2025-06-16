@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using MyTask.Application.Common.Extension;
 using MyTask.Application.Contracts;
 using System;
@@ -12,25 +13,18 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.CreateProj
     public class CreateProjectStatusCommandHandler : IRequestHandler<CreateProjectStatusCommand, bool>
     {
         private readonly IProjectStatusRepository _repository;
-        public CreateProjectStatusCommandHandler(IProjectStatusRepository repository)
+        private readonly IMemoryCache _memoryCache;
+        public CreateProjectStatusCommandHandler(IProjectStatusRepository repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
 
         public async Task<bool> Handle(CreateProjectStatusCommand request, CancellationToken cancellationToken)
         {
-            try 
-            {
-                var response = await _repository.CreateAsync(request.MapToProjectstatus());
-                return response.Value;
-            } 
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Error on CreateProjectStatusCommand: {ex}");
-                return false;
-            }
-
-            
+            var response = await _repository.CreateAsync(request.MapToProjectstatus());
+            _memoryCache.Remove("GetAllProjectStatus");
+            return response.Value;         
         }
     }
 }

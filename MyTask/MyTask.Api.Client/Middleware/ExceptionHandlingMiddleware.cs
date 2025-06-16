@@ -21,7 +21,7 @@ namespace MyTask.Api.Client.Middleware
         {
             try
             {
-                await _next(context); // Call the next middleware
+                await _next(context);
             }
             catch (Exception ex)
             {

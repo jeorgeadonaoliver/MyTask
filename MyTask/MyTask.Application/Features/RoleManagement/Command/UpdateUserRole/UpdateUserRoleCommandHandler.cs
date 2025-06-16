@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using MyTask.Application.Common.Extension;
 using MyTask.Application.Contracts;
 using System;
@@ -12,14 +13,18 @@ namespace MyTask.Application.Features.RoleManagement.Command.UpdateUserRole
     public class UpdateUserRoleCommandHandler : IRequestHandler<UpdateUserRoleCommand, bool>
     {
         private readonly IUserRoleRepository _repository;
-        public UpdateUserRoleCommandHandler(IUserRoleRepository repository)
+        private readonly IMemoryCache _memoryCache;
+        
+        public UpdateUserRoleCommandHandler(IUserRoleRepository repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
 
         public async Task<bool> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
             var data = await _repository.UpdateRoleAsync(request.MapToUserRole());
+            _memoryCache.Remove("GetUserRoleQuery");
             return data;
         }
     }

@@ -24,6 +24,8 @@ namespace MyTask.Persistence
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IProjectStatusRepository, ProjectStatusRepository>();
             services.AddScoped<IUnitOfWork, MyTaskDbUnitOfWork>();
+            services.AddScoped<ISprintRepository, SprintRepository>();
+            services.AddScoped<ISprintStatusRepository, SprintStatusRepository>();
 
             return services;
         }
