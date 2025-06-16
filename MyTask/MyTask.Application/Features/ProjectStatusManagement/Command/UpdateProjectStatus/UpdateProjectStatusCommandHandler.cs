@@ -21,16 +21,8 @@ namespace MyTask.Application.Features.ProjectStatusManagement.Command.UpdateProj
 
         public async Task<bool> Handle(UpdateProjectStatusCommand request, CancellationToken cancellationToken)
         {
-            try 
-            {
-                var response = await _repository.UpdateProjectStatus(request.MapToProjectStatus());
-                return response;
-            } 
-            catch(Exception ex) 
-            {
-                Console.WriteLine($"Error on UpdateProjectStatus method: {ex}");
-                return false;
-            }
+             var response = await _repository.UpdateProjectStatus(request.MapToProjectStatus());
+             return response;
         }
     }
 }

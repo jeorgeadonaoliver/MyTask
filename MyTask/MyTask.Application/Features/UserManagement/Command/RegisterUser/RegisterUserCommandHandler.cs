@@ -17,19 +17,10 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, b
     public async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         await _unitOfWork.BeginTransactionAsync();
-        try 
-        {
-            request.Id = Guid.NewGuid();
-            var data = await _repository.CreateAsync(request.MapToEntity());
-            await _unitOfWork.CommitTransactionAsync();
+        request.Id = Guid.NewGuid();
+        var data = await _repository.CreateAsync(request.MapToEntity());
+        await _unitOfWork.CommitTransactionAsync();
 
-            return data.Value;
-        }
-        catch (Exception ex) 
-        {
-            Console.WriteLine($"Error on Unitofwork RegisterCommand: {ex}");
-            await _unitOfWork.RollbackTransactionAsync();
-            return false;
-        }
+        return data.Value;
     }
 }
