@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTask.Persistence", "MyTas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTask.Security", "MyTask.Security\MyTask.Security.csproj", "{561440E8-4402-4833-B45C-D77AB2899287}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTask.RedisCache", "MyTask.RedisCache\MyTask.RedisCache.csproj", "{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{561440E8-4402-4833-B45C-D77AB2899287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561440E8-4402-4833-B45C-D77AB2899287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561440E8-4402-4833-B45C-D77AB2899287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{940BF450-7C74-4738-8B8C-B88AD737A949} = {F606BAF3-74B6-4180-81FC-125B7485B00D}
 		{149FF184-5525-41A6-B6FB-7AEFC80E30CB} = {29BD41A9-CA0F-490A-AC1F-1124233F004C}
 		{561440E8-4402-4833-B45C-D77AB2899287} = {29BD41A9-CA0F-490A-AC1F-1124233F004C}
+		{CABAD8F9-E020-42C7-ADC3-1E1DB9B06A47} = {29BD41A9-CA0F-490A-AC1F-1124233F004C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {500C37D9-B1C5-4950-BE52-DF03B88F9FE2}

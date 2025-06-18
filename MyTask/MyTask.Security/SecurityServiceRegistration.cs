@@ -7,7 +7,6 @@ namespace MyTask.Security
     {
         public static IServiceCollection AddSecurityService(this IServiceCollection services) 
         {
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
 
             return services;

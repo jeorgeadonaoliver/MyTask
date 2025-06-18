@@ -26,6 +26,7 @@ namespace MyTask.Persistence
             services.AddScoped<IUnitOfWork, MyTaskDbUnitOfWork>();
             services.AddScoped<ISprintRepository, SprintRepository>();
             services.AddScoped<ISprintStatusRepository, SprintStatusRepository>();
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }

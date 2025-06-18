@@ -3,19 +3,24 @@ using MyTask.Api.Client.MyTaskDbModel;
 using MyTask.Application.Common;
 using MyTask.Application.Contracts;
 using MyTask.Persistence.MyTaskDb;
-using MyTask.Persistence.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MyTask.Security
+namespace MyTask.Persistence.Repository
 {
     public class AuthService : GenericRepository<User>, IAuthService
     {
         public AuthService(MyTaskDbContext context) : base(context) { }
 
-        public async Task<Result<string>> GetUserPasswordlByEmailAsync(string email) 
+        public async Task<Result<string>> GetUserPasswordlByEmailAsync(string email)
         {
             var user = await _context.Set<User>().AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
 
-            return user == null 
+            return user == null
                 ? Result<string>.Failed("Error on GetUserPasswordlByEmailAsync!")
                 : Result<string>.Success(user.PasswordHash);
         }
